@@ -1,0 +1,19 @@
+resolver: lts-22.43
+
+nix:
+  enable: true
+  packages:
+    - zlib
+
+packages:
+  - .
+
+extra-deps:
+  - project-m36-1.1.1
+  - curryer-rpc-0.4.0@sha256:a270cbb8f7b29fb580e4a798350bf6d4c42b5b553b27b182589b42be74e9c6d3,2906
+  - fast-builder-0.1.5.0@sha256:09e06fc66a7b664bb1e8fbfa56d067874ce6a447612fe08f5cf48243bdbecfae,2807
+  - rset-1.0.0@sha256:5a66770d08ddf10f7ab3aeddd03bafe5859daa403df939f1332ae30267e74939,1643
+  - scotty-0.22@sha256:b3c799b3c4896176342062c1140c290ffb9a8d81e6da2ea3e12f7a83cbda78d4,6013
+  - winery-1.5@sha256:811e149601920f4b3fd356c9b854e33e78691b17d18bb74551cbab5c1bf2a002,2928
+  - barbies-th-0.1.11@sha256:df9648ae23b2a97f7766fae2ca923b7554b53775925ba15fbcb062cc837e1040,1660
+  - streamly-bytestring-0.2.2@sha256:dd498a4e416c60ba4271e7e72269ec5123d895dd0dd6fd93dbabc7a7e6103d98,2576

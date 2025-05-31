@@ -1,0 +1,25 @@
+[language-server.dhall-lsp]
+name = "Dhall LSP"
+command = "dhall-lsp-server"
+
+
+[[language]]
+name = "haskell"
+auto-format = true
+
+[[language]]
+name = "nix"
+auto-format = true
+formatter = { command = "nixfmt" }
+
+[[language]]
+auto-format = true
+name = "dhall"
+scope = "source.dhall"
+injection-regex = "dhall"
+file-types = ["dhall"]
+roots = []
+comment-token = "--"
+indent = { tab-width = 2, unit = "  " }
+language-servers = ["dhall-lsp"]
+formatter = { command = "dhall" , args = ["format"] }

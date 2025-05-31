@@ -1,0 +1,83 @@
+name: project-m36-rest
+
+library:
+  source-dirs: src
+  dependencies:
+    - base
+    - project-m36
+    - servant
+    - servant-server
+    - wai
+    - warp
+    - aeson
+    - optparse-applicative
+    - vector
+    - base64
+    - text
+
+executable:
+  main: Main.hs
+  source-dirs: exe
+  dependencies:
+    - base
+    - project-m36-rest
+    
+
+default-extensions:
+  - DefaultSignatures
+  - DataKinds
+  - MultiParamTypeClasses
+  - OverloadedRecordDot
+  - DerivingStrategies
+  - DerivingVia
+  - DeriveAnyClass
+  - DuplicateRecordFields
+  - OverloadedStrings
+  - ApplicativeDo
+  - LambdaCase
+  - UndecidableInstances 
+  - TypeFamilies
+  - FunctionalDependencies
+  - ScopedTypeVariables
+  - QuantifiedConstraints
+  - OverloadedLabels
+  - PartialTypeSignatures 
+  - ViewPatterns
+  - NoFieldSelectors
+  - NoFieldSelectors
+  - AllowAmbiguousTypes 
+  - ImpredicativeTypes
+  - MultiWayIf
+  - PackageImports
+  - RoleAnnotations
+  - BangPatterns
+  - MagicHash
+  - UnboxedTuples
+  - TypeOperators
+  - StandaloneDeriving
+  - TypeApplications
+  - PolyKinds
+  - TupleSections
+  - ExistentialQuantification 
+  - FlexibleInstances
+  - ConstraintKinds
+  - FlexibleContexts
+  - GADTs
+  - DeriveGeneric
+  - OverloadedLabels
+  - ImportQualifiedPost
+
+ghc-options: > 
+  -Weverything
+  -Wno-unsafe
+  -Wno-missing-safe-haskell-mode
+  -Wno-missing-import-lists
+  -Wno-missing-kind-signatures
+  -Wno-all-missed-specialisations
+  -Wno-missed-specialisations
+  -Wno-partial-type-signatures
+  -Wno-partial-fields
+  -Wno-operator-whitespace
+  -Wno-missed-extra-shared-lib
+  -Wno-implicit-prelude
+  -threaded
