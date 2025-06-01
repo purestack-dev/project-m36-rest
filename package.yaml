@@ -14,6 +14,7 @@ library:
     - vector
     - base64
     - text
+    - containers
 
 executable:
   main: Main.hs
