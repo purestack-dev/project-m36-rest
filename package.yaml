@@ -15,6 +15,7 @@ library:
     - base64
     - text
     - containers
+    - wai-logger
 
 executable:
   main: Main.hs

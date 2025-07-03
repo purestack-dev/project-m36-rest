@@ -19,6 +19,7 @@ import Data.Traversable
 import Data.Vector qualified as V
 import GHC.Generics (Generic)
 import Network.Wai.Handler.Warp qualified as Warp
+import Network.Wai.Logger (withStdoutLogger)
 import Options.Applicative
 import ProjectM36.Base
 import ProjectM36.Client
@@ -225,8 +226,12 @@ run = do
           Right x -> pure x
     )
     close
-    ( \conn ->
+    ( \conn -> withStdoutLogger $ \logger ->
         Warp.runSettings
-          (Warp.defaultSettings & Warp.setServerName "project-m36-rest" & Warp.setPort opts.port)
+          ( Warp.defaultSettings
+              & Warp.setServerName "project-m36-rest"
+              & Warp.setPort opts.port
+              & Warp.setLogger logger
+          )
           (genericServe (server conn))
     )
