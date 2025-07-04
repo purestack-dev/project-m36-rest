@@ -98,10 +98,10 @@ encodeRelation (Relation (Attributes attrs) (RelationTupleSet tuples)) =
       "vals" A..= (tuples <&> (\(RelationTuple _ atoms) -> encodeAtom <$> atoms))
     ]
 
-decodeRelationType :: A.Array -> A.Parser (V.Vector Attribute)
+decodeRelationType :: A.Object -> A.Parser (V.Vector Attribute)
 decodeRelationType o =
-  traverse parseJSON o
-    >>= traverse
+  fmap V.fromList $
+    traverse
       ( \(key, v) ->
           Attribute (Key.toText key) <$> case v of
             A.String "int" -> pure IntAtomType
@@ -114,9 +114,10 @@ decodeRelationType o =
             A.String "bytestring" -> pure ByteStringAtomType
             A.String "bool" -> pure BoolAtomType
             A.String "uuid" -> pure UUIDAtomType
-            A.Array x -> RelationAtomType . Attributes <$> decodeRelationType x
+            A.Object x -> RelationAtomType . Attributes <$> decodeRelationType x
             _ -> fail $ "unknown type: " <> show v
       )
+      (KeyMap.toList o)
 
 decodeExpr :: A.Value -> A.Parser RelationalExpr
 decodeExpr = withObject "Expr" $ \o -> case KeyMap.toList o of
