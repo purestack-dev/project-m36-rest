@@ -98,26 +98,23 @@ encodeRelation (Relation (Attributes attrs) (RelationTupleSet tuples)) =
       "vals" A..= (tuples <&> (\(RelationTuple _ atoms) -> encodeAtom <$> atoms))
     ]
 
-decodeRelationType :: A.Object -> A.Parser (V.Vector Attribute)
-decodeRelationType o =
-  fmap V.fromList $
-    traverse
-      ( \(key, v) ->
-          Attribute (Key.toText key) <$> case v of
-            A.String "int" -> pure IntAtomType
-            A.String "integer" -> pure IntegerAtomType
-            A.String "scientific" -> pure ScientificAtomType
-            A.String "double" -> pure DoubleAtomType
-            A.String "text" -> pure TextAtomType
-            A.String "day" -> pure DayAtomType
-            A.String "datetime" -> pure DateTimeAtomType
-            A.String "bytestring" -> pure ByteStringAtomType
-            A.String "bool" -> pure BoolAtomType
-            A.String "uuid" -> pure UUIDAtomType
-            A.Object x -> RelationAtomType . Attributes <$> decodeRelationType x
-            _ -> fail $ "unknown type: " <> show v
-      )
-      (KeyMap.toList o)
+decodeRelationType :: V.Vector (Text, A.Value) -> A.Parser (V.Vector Attribute)
+decodeRelationType =
+  traverse
+    ( \(key, v) ->
+        Attribute key <$> case v of
+          A.String "int" -> pure IntAtomType
+          A.String "integer" -> pure IntegerAtomType
+          A.String "scientific" -> pure ScientificAtomType
+          A.String "double" -> pure DoubleAtomType
+          A.String "text" -> pure TextAtomType
+          A.String "day" -> pure DayAtomType
+          A.String "datetime" -> pure DateTimeAtomType
+          A.String "bytestring" -> pure ByteStringAtomType
+          A.String "bool" -> pure BoolAtomType
+          A.String "uuid" -> pure UUIDAtomType
+          x -> parseJSON x >>= fmap (RelationAtomType . Attributes) . decodeRelationType
+    )
 
 decodeExpr :: A.Value -> A.Parser RelationalExpr
 decodeExpr = withObject "Expr" $ \o -> case KeyMap.toList o of
